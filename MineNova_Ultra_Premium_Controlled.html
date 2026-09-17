@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050b14">
+<title>MineNova — Mining Hub</title>
+<style>
+:root{--bg:#050a12;--panel:#0b1524;--panel2:#0e1c30;--line:#1b3550;--text:#eef6ff;--muted:#7d94ad;--blue:#56a9ff;--violet:#8065ff;--green:#45d6aa;--gold:#ffd36b}
+*{box-sizing:border-box}body{margin:0;background:#02050b;color:var(--text);font-family:Inter,Arial,sans-serif}.app{max-width:480px;margin:auto;min-height:100vh;background:radial-gradient(circle at 50% 0,#17355b 0,#07111f 30%,#050a12 68%)}
+header{padding:17px 15px 11px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px}.logo{width:43px;height:43px;border-radius:14px;background:linear-gradient(145deg,#64b7ff,#6255e8);display:grid;place-items:center;font-size:25px;box-shadow:0 0 25px #4a8dff44}.brand b{font-size:21px}.brand b span{color:var(--blue)}.sub{font-size:9px;color:var(--muted);letter-spacing:1px}.online{font-size:9px;padding:7px 9px;border-radius:99px;border:1px solid #21466a;background:#0d2239;color:#8fcaff}
+.page{display:none;padding-bottom:90px}.page.active{display:block}.card{margin:0 14px 11px;padding:16px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(145deg,#0d1a2b,#08111e);box-shadow:0 12px 30px #0005}.hero{text-align:center;padding:20px 14px 18px}.label{font-size:10px;color:#87a3c1;letter-spacing:1.2px}.balance{font-size:34px;font-weight:950;margin:5px}.unit{font-size:9px;color:#6f88a4}.mine{width:155px;height:155px;margin:18px auto 12px;border-radius:50%;display:grid;place-items:center;font-size:54px;cursor:pointer;background:radial-gradient(circle,#19436d,#0a1a2e 67%);border:6px solid #285477;box-shadow:0 0 0 7px #102943,0 0 45px #479cff2b;transition:.12s}.mine:active{transform:scale(.93)}.cool{font-size:10px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat{padding:12px;border:1px solid #17304b;border-radius:15px;background:#081321}.stat small{color:#7088a3;font-size:9px}.stat b{display:block;margin-top:4px;font-size:16px}h3{font-size:14px;margin:0 0 12px}.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #142b43}.row:last-child{border:0}.muted{font-size:10px;color:var(--muted);line-height:1.5}.reward{font-size:10px;color:#8fc8ff;margin-top:3px}button{border:0;border-radius:11px;padding:9px 12px;color:white;font-weight:850;background:linear-gradient(135deg,#267ff2,#6958e9);cursor:pointer;font-size:10px}button:disabled{opacity:.35}.pill{padding:5px 8px;border-radius:99px;background:#102b46;color:#8ecbff;font-size:9px}.notice{font-size:9px;line-height:1.55;color:#7089a4}.progress{height:7px;border-radius:99px;background:#0b2035;overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--violet));width:0}.tokenbox{display:grid;grid-template-columns:1fr 1fr;gap:9px}.token{padding:12px;border-radius:14px;background:#091625;border:1px solid #18324d}.token strong{display:block;font-size:16px;margin-top:3px}.token span{font-size:9px;color:var(--muted)}nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);display:grid;grid-template-columns:repeat(5,1fr);padding:7px;background:#06101ced;border-top:1px solid #18304a;backdrop-filter:blur(12px);z-index:5}nav button{background:transparent;color:#7189a5;padding:8px 2px;font-size:9px}nav button.active{background:#112640;color:#fff}.toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%);padding:10px 14px;border-radius:12px;background:#122a45;border:1px solid #2a5278;display:none;font-size:11px;z-index:10;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<div class="brand"><div class="logo">⛏</div><div><b><span>Mine</span>Nova</b><div class="sub">MINING • MISSIONS • ECOSYSTEM</div></div></div>
+<div class="online">● LIVE</div>
+</header>
+
+<section id="home" class="page active">
+<div class="card hero">
+<div class="label">NOVA POINTS</div><div class="balance" id="bal">0</div><div class="unit">CONTROLLED GAME POINTS</div>
+<div class="mine" onclick="mine()">⛏️</div><div class="cool" id="cool">Mining Claim Ready</div>
+</div>
+<div class="grid" style="margin:0 14px 11px"><div class="stat">⚡ <small>ENERGY</small><b id="energy">100 / 100</b></div><div class="stat">🔥 <small>STREAK</small><b id="streak">0 days</b></div><div class="stat">⭐ <small>XP</small><b id="xp">0</b></div><div class="stat">🏆 <small>LEVEL</small><b id="level">1</b></div></div>
+<div class="card"><h3>🚀 Limited Boosts</h3><div class="grid"><button onclick="recharge()">⚡ +20 Energy</button><button onclick="doubleBoost()">🔥 2× Claim</button></div><p class="notice">Boosts are limited gameplay features. Points are not cash or cryptocurrency.</p></div>
+</section>
+
+<section id="tasks" class="page">
+<div class="card"><h3>🎯 Mission Center</h3><div id="missions"></div></div>
+<div class="card"><h3>🏆 Milestones</h3><div class="row"><span>10 Mining Claims</span><span class="pill" id="m10">0 / 10</span></div><div class="row"><span>50 Mining Claims</span><span class="pill" id="m50">0 / 50</span></div><div class="row"><span>100 Mining Claims</span><span class="pill" id="m100">0 / 100</span></div></div>
+</section>
+
+<section id="rewards" class="page">
+<div class="card"><h3>🎁 Daily Reward</h3><p class="muted">Limited to one claim every 24 hours.</p><button onclick="daily()">CLAIM +50</button></div>
+<div class="card"><h3>🎲 Lucky Spin</h3><p class="muted">One spin every 12 hours.</p><button onclick="spin()">SPIN</button></div>
+<div class="card"><h3>📦 Mystery Chest</h3><p class="muted">One chest every 24 hours.</p><button onclick="chest()">OPEN CHEST</button></div>
+</section>
+
+<section id="ecosystem" class="page">
+<div class="card"><h3>🌐 MineNova Ecosystem</h3><div class="tokenbox">
+<div class="token"><span>POINTS SUPPLY</span><strong>CONTROLLED</strong></div>
+<div class="token"><span>TOKEN STATUS</span><strong>PLANNED</strong></div>
+<div class="token"><span>BLOCKCHAIN</span><strong>PLANNED</strong></div>
+<div class="token"><span>WITHDRAWAL</span><strong>LOCKED</strong></div>
+</div></div>
+<div class="card"><h3>🛡️ Fair-Play Limits</h3><div class="row"><span>Mining Claim</span><b>1 / 4h</b></div><div class="row"><span>Daily Reward</span><b>1 / 24h</b></div><div class="row"><span>Lucky Spin</span><b>1 / 12h</b></div><div class="row"><span>Energy</span><b>100 Max</b></div><div class="row"><span>Referral</span><b>Limited</b></div><p class="notice">A production launch would need server-side anti-bot checks, a database ledger, rate limits, audit logs and security review.</p></div>
+<div class="card"><h3>📜 Future Token Roadmap</h3><div class="row"><span>Phase 1</span><span class="pill">GAME</span></div><div class="row"><span>Phase 2</span><span class="pill">COMMUNITY</span></div><div class="row"><span>Phase 3</span><span class="pill">TOKEN DESIGN</span></div><div class="row"><span>Phase 4</span><span class="pill">BLOCKCHAIN REVIEW</span></div><div class="row"><span>Phase 5</span><span class="pill">FUTURE LISTING APPLICATION</span></div></div>
+</section>
+
+<section id="profile" class="page">
+<div class="card"><h3>👤 Miner Profile</h3><div class="row"><span>Level</span><b id="pLevel">1</b></div><div class="row"><span>Total Points</span><b id="pBal">0</b></div><div class="row"><span>Mining Claims</span><b id="pMines">0</b></div><div class="row"><span>Missions</span><b id="pDone">0</b></div></div>
+<div class="card"><h3>⭐ Level Progress</h3><div class="progress"><i id="bar"></i></div><p class="muted" id="next">0 / 100 XP</p></div>
+<div class="card"><h3>🔐 Transparency</h3><p class="notice">MineNova currently uses off-chain game points. They have no guaranteed monetary value. Any future token, conversion, supply, withdrawal or listing would be a separate decision requiring technical, security and legal/compliance work.</p></div>
+</section>
+
+<nav><button class="active" onclick="tab('home',this)">⛏ Mine</button><button onclick="tab('tasks',this)">🎯 Tasks</button><button onclick="tab('rewards',this)">🎁 Rewards</button><button onclick="tab('ecosystem',this)">🌐 Hub</button><button onclick="tab('profile',this)">👤 Me</button></nav>
+</div><div id="toast" class="toast"></div>
+<script>
+const K="minenova_controlled_v3";let s=JSON.parse(localStorage.getItem(K)||"null")||{bal:0,energy:100,xp:0,streak:0,mines:0,lastMine:0,lastDaily:0,lastSpin:0,lastChest:0,doubleUntil:0,done:{}};
+const ms=[["check","📅 Daily Check-in",20],["mine10","⛏️ 10 Mining Claims",30],["mine50","🔥 50 Mining Claims",75],["community","📣 Community Mission",25],["video","🎬 Project Video",25]];
+function save(){localStorage.setItem(K,JSON.stringify(s));render()}
+function toast(t){let x=document.getElementById("toast");x.textContent=t;x.style.display="block";setTimeout(()=>x.style.display="none",1500)}
+function add(n){s.bal+=n;s.xp+=Math.max(1,Math.floor(n/5));save()}
+function mine(){let n=Date.now();if(n-s.lastMine<14400000){toast("⏳ Next Mining Claim is in 4 hours");return}if(s.energy<10){toast("⚡ Energy is too low");return}let r=n<s.doubleUntil?10:5;s.energy-=10;s.lastMine=n;s.mines++;add(r);toast("⛏️ Mining Claim +"+r)}
+function recharge(){s.energy=Math.min(100,s.energy+20);save();toast("⚡ +20 Energy")}
+function doubleBoost(){s.doubleUntil=Date.now()+1800000;save();toast("🔥 2× Claim active for 30 min")}
+function daily(){if(Date.now()-s.lastDaily<86400000){toast("🎁 Daily Reward locked");return}s.lastDaily=Date.now();s.streak++;add(50);toast("🎁 +50")}
+function spin(){if(Date.now()-s.lastSpin<43200000){toast("🎲 Spin locked");return}s.lastSpin=Date.now();let a=[5,10,15,20],r=a[Math.floor(Math.random()*a.length)];add(r);toast("🎲 +"+r)}
+function chest(){if(Date.now()-s.lastChest<86400000){toast("📦 Chest locked");return}s.lastChest=Date.now();let r=10+Math.floor(Math.random()*21);add(r);toast("📦 +"+r)}
+function claim(id,r){if(s.done[id])return;s.done[id]=1;add(r);toast("✅ Mission +"+r)}
+function render(){let lv=Math.floor(s.xp/100)+1,p=s.xp%100;bal.textContent=s.bal.toLocaleString();energy.textContent=s.energy+" / 100";streak.textContent=s.streak+" days";xp.textContent=s.xp;level.textContent=lv;pLevel.textContent=lv;pBal.textContent=s.bal.toLocaleString();pMines.textContent=s.mines;pDone.textContent=Object.keys(s.done).length;bar.style.width=p+"%";next.textContent=p+" / 100 XP";m10.textContent=Math.min(10,s.mines)+" / 10";m50.textContent=Math.min(50,s.mines)+" / 50";m100.textContent=Math.min(100,s.mines)+" / 100";let d=Date.now()-s.lastMine;cool.textContent=d>=14400000?"Mining Claim Ready":"Next Claim in "+Math.ceil((14400000-d)/3600000)+"h";missions.innerHTML=ms.map(x=>`<div class="row"><div><b>${x[1]}</b><div class="reward">+${x[2]} points</div></div><button ${s.done[x[0]]?"disabled":""} onclick="claim('${x[0]}',${x[2]})">${s.done[x[0]]?"DONE":"CLAIM"}</button></div>`).join("")}
+function tab(id,b){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active")}render();
+</script>
+</body></html>
